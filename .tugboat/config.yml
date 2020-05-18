@@ -11,16 +11,15 @@ services:
     commands:
       build:
         - date
-        - sleep 15
+        - sleep 20
   three:
     image: tugboatqa/debian
     commands:
       build:
         - date
-        - sleep 20
+        - sleep 15
   four:
     image: tugboatqa/debian
     commands:
       build:
         - date
-        - sleep 25
