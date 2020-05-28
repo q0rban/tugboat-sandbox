@@ -2,6 +2,8 @@ services:
   one:
     image: tugboatqa/debian
     default: true
+    subpath: true
+    domain: tugboat.ibm.com
     commands:
       build:
         - date
