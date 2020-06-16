@@ -1,26 +1,16 @@
 services:
-  one:
-    image: tugboatqa/debian
+  node:
+    image: tugboatqa/node:12
     default: true
     commands:
+      init:
+        - apt-get update
+        - apt-get install --yes jq
+        - wget --quiet https://dashboard.tugboat.qa/cli/linux/tugboat.tar.gz
+        - tar -xzf tugboat.tar.gz
+        - mv tugboat /usr/local/bin
       build:
-        - date
-        - sleep 10
-  two:
-    image: tugboatqa/debian
-    commands:
-      build:
-        - date
-        - sleep 15
-  three:
-    image: tugboatqa/debian
-    commands:
-      build:
-        - date
-        - sleep 20
-  four:
-    image: tugboatqa/debian
-    commands:
-      build:
-        - date
-        - sleep 25
+        - 'curl --silent
+             -H "Authorization: Token $TUGBOAT_TOKEN"
+             https://api.tugboat.qa/v3/previews/$TUGBOAT_PREVIEW_ID
+             | jq .provider_ref.labels'
