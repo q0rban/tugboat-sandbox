@@ -3,6 +3,7 @@ on:
     types:
       - opened
       - reopened
+  push:
 
 jobs:
   tugboat_create_preview:
@@ -20,7 +21,7 @@ jobs:
       - name: Create comment using REST API
         run: |
           curl --request POST \
-          --url https://api.github.com/repos/${{ github.repository }}/issues/${{ github.context.payload.number }}/comments \
+          --url https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.number }}/comments \
           --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
           --header 'content-type: application/json' \
           --data '{ \
