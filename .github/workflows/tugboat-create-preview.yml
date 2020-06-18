@@ -1,0 +1,20 @@
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+
+jobs:
+  tugboat_create_preview:
+    runs-on: ubuntu-latest
+    name: Create a Tugboat Preview
+    steps:
+      - name: Hello world action step
+        id: hello
+        uses: q0rban/github-action@main
+        with:
+          who-to-greet: 'Created'
+      # Use the output from the `hello` step
+      - name: Get the output time
+        run: echo "The time was ${{ steps.hello.outputs.time }}"
+

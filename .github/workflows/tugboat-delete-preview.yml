@@ -1,0 +1,19 @@
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  tugboat_delete_preview:
+    runs-on: ubuntu-latest
+    name: Delete a Tugboat Preview
+    steps:
+      - name: Hello world action step
+        id: hello
+        uses: q0rban/github-action@main
+        with:
+          who-to-greet: 'Deleted'
+      # Use the output from the `hello` step
+      - name: Get the output time
+        run: echo "The time was ${{ steps.hello.outputs.time }}"
+
