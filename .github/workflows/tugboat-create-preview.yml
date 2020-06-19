@@ -15,7 +15,7 @@ jobs:
           curl -H "Authorization: Bearer ${{ secrets.TUGBOAT_API_TOKEN }}" \
                -H "Content-Type: application/json" \
                -X POST \
-               -d '{ "repo": "5ec2e1c6e7a500aa10c330f9", "ref": "pr${{ github.event.number }}", "name": "GHA ${{ github.event.title }}" }' \
+               -d '{ "repo": "5ec2e1c6e7a500aa10c330f9", "ref": "${{ github.event.number }}", "name": "GHA ${{ github.event.pull_request.title }}", "type": "pullrequest" }' \
                https://api.tugboat.qa/v3/previews
       - name: Create comment using REST API
         run: |
