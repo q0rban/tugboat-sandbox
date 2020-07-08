@@ -1,10 +1,12 @@
 services:
   lighthouse:
-    image: 'tugboatqa/node:12'
+    image: 'tugboatqa/alpine:3.9'
     checkout: true
     expose: 8080
     commands:
       init:
+        - 'apk update'
+        - 'apk add runit nodejs-current nodejs-current-npm curl chromium'
         - 'npm install -g @lhci/cli@0.4.x'
 #        - 'npm install --prefix=${TUGBOAT_ROOT}/tests/lighthouse'
 #        - 'mkdir -p /etc/service/node'
