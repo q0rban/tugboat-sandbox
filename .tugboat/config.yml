@@ -28,7 +28,7 @@ services:
               \"baseBranch\": \"main\"
             }" > lighthouse-project.json'
       build:
-        # Collect a report… just for lullabot.com right now to prototype this.
+        # Collect a report, just for lullabot.com right now to prototype this.
         - lhci collect
             --url="https://www.lullabot.com"
             --settings.chromeFlags="--disable-gpu --no-sandbox"
