@@ -16,6 +16,9 @@ services:
         - echo "node ${TUGBOAT_ROOT}/tests/lighthouse-server" >> /etc/service/lighthouse-server/run
         - chmod +x /etc/service/lighthouse-server/run
         - sleep 5
+        # Create the lighthouse project using the API, and save the resulting
+        # json in a file. This file has the token, so we can then use that token
+        # in build.
         - 'curl http://localhost:9001/v1/projects
             --header "Content-Type: application/json"
             --request POST
@@ -24,10 +27,13 @@ services:
               \"name\": \"${TUGBOAT_REPO}\",
               \"baseBranch\": \"main\"
             }" > lighthouse-project.json'
-#        - 'npm install --prefix=${TUGBOAT_ROOT}/tests/lighthouse'
-#        - 'mkdir -p /etc/service/node'
-#        - 'echo ''#!/bin/sh'' > /etc/service/node/run'
-#        - 'echo "node ${TUGBOAT_ROOT}/tests/lighthouse" >> /etc/service/node/run'
-#        - 'chmod +x /etc/service/node/run'
-#      build:
-#        - 'tests/lighthouse/test.sh || true'
+      build:
+        # Collect a report… just for lullabot.com right now to prototype this.
+        - lhci collect
+            --url="https://www.lullabot.com"
+            --settings.chromeFlags="--disable-gpu --no-sandbox"
+        # Store the report, reading in the token from the project json file.
+        - lhci upload
+            --target=lhci
+            --serverBaseUrl=http://localhost:9001
+            --token=`cat lighthouse-project.json | jq -r '.token'`
