@@ -33,7 +33,7 @@ services:
             --url="https://www.lullabot.com"
             --settings.chromeFlags="--disable-gpu --no-sandbox"
         # Store the report, reading in the token from the project json file.
-        - lhci upload
+        - 'lhci upload
             --target=lhci
             --serverBaseUrl=http://localhost:9001
-            --token=`cat lighthouse-project.json | jq -r '.token'`
+            --token=`cat lighthouse-project.json | jq -r ''.token''`'
