@@ -8,7 +8,7 @@ services:
     commands:
       init:
         - apk update
-        - apk add runit nodejs-current nodejs-current-npm curl chromium sqlite
+        - apk add runit nodejs-current nodejs-current-npm curl chromium sqlite jq
         - npm install -g @lhci/cli@0.4.x
         - npm install --prefix=${TUGBOAT_ROOT}/tests/lighthouse-server
         - mkdir -p /etc/service/lighthouse-server
