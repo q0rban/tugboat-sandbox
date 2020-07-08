@@ -1,26 +1,15 @@
 services:
-  one:
-    image: tugboatqa/debian
-    default: true
+  lighthouse:
+    image: 'tugboatqa/node:12'
+    checkout: true
+    expose: 8080
     commands:
-      build:
-        - date
-        - sleep 10
-  two:
-    image: tugboatqa/debian
-    commands:
-      build:
-        - date
-        - sleep 15
-  three:
-    image: tugboatqa/debian
-    commands:
-      build:
-        - date
-        - sleep 20
-  four:
-    image: tugboatqa/debian
-    commands:
-      build:
-        - date
-        - sleep 25
+      init:
+        - 'npm install -g @lhci/cli@0.4.x'
+#        - 'npm install --prefix=${TUGBOAT_ROOT}/tests/lighthouse'
+#        - 'mkdir -p /etc/service/node'
+#        - 'echo ''#!/bin/sh'' > /etc/service/node/run'
+#        - 'echo "node ${TUGBOAT_ROOT}/tests/lighthouse" >> /etc/service/node/run'
+#        - 'chmod +x /etc/service/node/run'
+#      build:
+#        - 'tests/lighthouse/test.sh || true'
