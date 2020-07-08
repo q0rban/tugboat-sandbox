@@ -1,8 +1,10 @@
 services:
   lighthouse:
+    # We need to use Alpine because Chromium doesn't work properly on Debian.
+    # See https://github.com/GoogleChrome/lighthouse/issues/7246
     image: 'tugboatqa/alpine:3.9'
     checkout: true
-    expose: 3000
+    expose: 9001
     commands:
       init:
         - apk update
@@ -13,6 +15,15 @@ services:
         - echo '#!/bin/sh' > /etc/service/lighthouse-server/run
         - echo "node ${TUGBOAT_ROOT}/tests/lighthouse-server" >> /etc/service/lighthouse-server/run
         - chmod +x /etc/service/lighthouse-server/run
+        - sleep 5
+        - 'curl http://localhost:9001/v1/projects
+            --header "Content-Type: application/json"
+            --request POST
+            --data ''{
+              "externalUrl": "https://github.com/${TUGBOAT_GITHUB_OWNER}/${TUGBOAT_GITHUB_REPO}",
+              "name": "${TUGBOAT_REPO}",
+              "baseBranch": "main"
+            }'''
 #        - 'npm install --prefix=${TUGBOAT_ROOT}/tests/lighthouse'
 #        - 'mkdir -p /etc/service/node'
 #        - 'echo ''#!/bin/sh'' > /etc/service/node/run'
