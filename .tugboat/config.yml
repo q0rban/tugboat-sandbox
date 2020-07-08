@@ -19,11 +19,11 @@ services:
         - 'curl http://localhost:9001/v1/projects
             --header "Content-Type: application/json"
             --request POST
-            --data ''{
-              "externalUrl": "https://github.com/${TUGBOAT_GITHUB_OWNER}/${TUGBOAT_GITHUB_REPO}",
-              "name": "${TUGBOAT_REPO}",
-              "baseBranch": "main"
-            }'''
+            --data "{
+              \"externalUrl\": \"https://github.com/${TUGBOAT_GITHUB_OWNER}/${TUGBOAT_GITHUB_REPO}\",
+              \"name\": \"${TUGBOAT_REPO}\",
+              \"baseBranch\": \"main\"
+            }"'
 #        - 'npm install --prefix=${TUGBOAT_ROOT}/tests/lighthouse'
 #        - 'mkdir -p /etc/service/node'
 #        - 'echo ''#!/bin/sh'' > /etc/service/node/run'
