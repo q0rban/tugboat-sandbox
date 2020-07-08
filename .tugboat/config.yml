@@ -23,7 +23,7 @@ services:
               \"externalUrl\": \"https://github.com/${TUGBOAT_GITHUB_OWNER}/${TUGBOAT_GITHUB_REPO}\",
               \"name\": \"${TUGBOAT_REPO}\",
               \"baseBranch\": \"main\"
-            }"'
+            }" > lighthouse-project.json'
 #        - 'npm install --prefix=${TUGBOAT_ROOT}/tests/lighthouse'
 #        - 'mkdir -p /etc/service/node'
 #        - 'echo ''#!/bin/sh'' > /etc/service/node/run'
