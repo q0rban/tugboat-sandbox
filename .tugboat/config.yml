@@ -5,6 +5,8 @@ services:
     commands:
       init:
         - ln -snf $TUGBOAT_ROOT $DOCROOT
+        - docker-php-ext-enable xdebug
+        - printf "xdebug.mode=debug\nxdebug.client_host=dbgp" > /usr/local/etc/php/conf.d/xdebug.ini
   dbgp:
     image: tugboatqa/php:7.4-fpm
     expose: 9003
@@ -12,3 +14,5 @@ services:
       init:
         - curl -o /usr/local/bin/dbgpProxy https://xdebug.org/files/binaries/dbgpProxy
         - chmod +x /usr/local/bin/dbgpProxy
+      start:
+        - dbgpProxy -s php:9003 -i localhost:9003 &
