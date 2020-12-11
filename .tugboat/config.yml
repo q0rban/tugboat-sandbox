@@ -1,26 +1,14 @@
 services:
-  one:
-    image: tugboatqa/debian
+  php:
+    image: tugboatqa/php:7.4-apache
     default: true
     commands:
-      build:
-        - date
-        - sleep 10
-  two:
-    image: tugboatqa/debian
+      init:
+        - ln -snf $TUGBOAT_ROOT $DOCROOT
+  dbgp:
+    image: tugboatqa/php:7.4-fpm
+    expose: 9003
     commands:
-      build:
-        - date
-        - sleep 15
-  three:
-    image: tugboatqa/debian
-    commands:
-      build:
-        - date
-        - sleep 20
-  four:
-    image: tugboatqa/debian
-    commands:
-      build:
-        - date
-        - sleep 25
+      init:
+        - curl -o /usr/local/bin/dbgpProxy https://xdebug.org/files/binaries/dbgpProxy
+        - chmod +x /usr/local/bin/dbgpProxy
