@@ -10,7 +10,7 @@ services:
         - printf "\nInclude $TUGBOAT_ROOT/.tugboat/httpd.conf\n" >> /usr/local/apache2/conf/httpd.conf
       build:
         - echo "$TUGBOAT_PREVIEW_NAME" | tr '[:upper:]' '[:lower:]' | sed -e 's/[^a-z0-9]/-/g' -e 's/-\+/-/g' -e 's/\(^-\)\|\(-$\)//g'
-  backend:
+  php:
     image: tugboatqa/httpd
     commands:
       build:
