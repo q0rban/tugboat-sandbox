@@ -17,8 +17,8 @@ services:
               -e 's/\(^-\)\|\(-$\)//g')"
             > $TUGBOAT_ROOT/qa_subdomain.conf
   php:
-    image: tugboatqa/httpd
+    image: tugboatqa/php:7-apache
     commands:
       build:
         - mkdir -p $DOCROOT
-        - echo "$TUGBOAT_PREVIEW_NAME" > $DOCROOT/index.html
+        - echo '<pre><?php print_r($_SERVER); ?></pre>' > $DOCROOT/index.php
