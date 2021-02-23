@@ -9,7 +9,17 @@ services:
       init:
         - printf "\nInclude $TUGBOAT_ROOT/.tugboat/httpd.conf\n" >> /usr/local/apache2/conf/httpd.conf
       build:
-        - echo "$TUGBOAT_PREVIEW_NAME" | tr '[:upper:]' '[:lower:]' | sed -e 's/[^a-z0-9]/-/g' -e 's/-\+/-/g' -e 's/\(^-\)\|\(-$\)//g'
+        - printf "SetEnv qa_subdomain %s"
+            $(echo "$TUGBOAT_PREVIEW_NAME"
+#             Make everything lowercase.
+              tr '[:upper:]' '[:lower:]' |
+#             Replace all non-alnum chars with hyphens.
+              sed -e 's/[^a-z0-9]/-/g'
+#             Replace duplicate hyphens with singles.
+              -e 's/-\+/-/g'
+#             Strip leading / trailing hyphens.
+              -e 's/\(^-\)\|\(-$\)//g')
+            > $TUGBOAT_ROOT/qa_subdomain.conf
   php:
     image: tugboatqa/httpd
     commands:
