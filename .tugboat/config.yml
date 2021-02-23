@@ -9,7 +9,7 @@ services:
       init:
         - printf "\nInclude $TUGBOAT_ROOT/.tugboat/httpd.conf\n" >> /usr/local/apache2/conf/httpd.conf
       build:
-        - printf "SetEnv qa_subdomain %s"
+        - printf 'SetEnvIf Request_URI ".*" QA_SUBDOMAIN=%s\n'
             "$(echo "$TUGBOAT_PREVIEW_NAME" |
               tr '[:upper:]' '[:lower:]' |
               sed -e 's/[^a-z0-9]/-/g'
