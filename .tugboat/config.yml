@@ -1,26 +1,18 @@
 services:
-  one:
-    image: tugboatqa/debian
+  proxy:
+    image: tugboatqa/httpd
     default: true
+    aliases:
+      - cms
+      - web
+    commands:
+      init:
+        - printf "\nInclude $TUGBOAT_ROOT/.tugboat/httpd.conf\n" >> /usr/local/apache2/conf/httpd.conf
+      build:
+        - echo "$TUGBOAT_PREVIEW_NAME" | tr '[:upper:]' '[:lower:]' | sed -e 's/[^a-z0-9]/-/g' -e 's/-\+/-/g' -e 's/\(^-\)\|\(-$\)//g
+  backend:
+    image: tugboatqa/httpd
     commands:
       build:
-        - date
-        - sleep 10
-  two:
-    image: tugboatqa/debian
-    commands:
-      build:
-        - date
-        - sleep 15
-  three:
-    image: tugboatqa/debian
-    commands:
-      build:
-        - date
-        - sleep 20
-  four:
-    image: tugboatqa/debian
-    commands:
-      build:
-        - date
-        - sleep 25
+        - mkdir -p $DOCROOT
+        - echo "$TUGBOAT_PREVIEW_NAME" > $DOCROOT/index.html
