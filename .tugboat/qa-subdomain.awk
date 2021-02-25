@@ -8,5 +8,5 @@
   # Remove leading / trailing hyphens.
   gsub(/(^-)|(-$)/, "", str);
   # Trim the string down to 25 characters and print.
-  printf 'SetEnvIf Request_URI ".*" QA_SUBDOMAIN=%s\n', substr(str, 0, 25)
+  printf "SetEnvIf Request_URI \".*\" QA_SUBDOMAIN=%s\n", substr(str, 0, 25)
 }
