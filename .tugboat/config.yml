@@ -10,11 +10,18 @@ services:
         - printf "\nInclude $TUGBOAT_ROOT/.tugboat/httpd.conf\n" >> /usr/local/apache2/conf/httpd.conf
       build:
         - printf 'SetEnvIf Request_URI ".*" QA_SUBDOMAIN=%s\n'
-            "$(echo "$TUGBOAT_PREVIEW_NAME" |
-              tr '[:upper:]' '[:lower:]' |
-              sed -e 's/[^a-z0-9]/-/g'
-              -e 's/-\+/-/g'
-              -e 's/\(^-\)\|\(-$\)//g')"
+            "$(echo "$TUGBOAT_PREVIEW_NAME" | awk '{
+              # Convert to lowercase.
+              str = tolower($0);
+              # Replace all special chars with hyphens.
+              gsub(/[^a-z0-9]/, "-", str);
+              # Deduplicate hyphens.
+              gsub(/-+/, "-", str);
+              # Remove leading / trailing hyphens.
+              gsub(/(^-)|(-$)/, "", str);
+              # Trim the string down to 25 characters and print.
+              print substr(str, 0, 25)
+            }')"
             > $TUGBOAT_ROOT/qa_subdomain.conf
   php:
     image: tugboatqa/php:7-apache
