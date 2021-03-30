@@ -1,26 +1,4 @@
 services:
-  one:
-    image: tugboatqa/debian
+  solr:
+    image: tugboatqa/solr:8.6
     default: true
-    commands:
-      build:
-        - date
-        - sleep 10
-  two:
-    image: tugboatqa/debian
-    commands:
-      build:
-        - date
-        - sleep 15
-  three:
-    image: tugboatqa/debian
-    commands:
-      build:
-        - date
-        - sleep 20
-  four:
-    image: tugboatqa/debian
-    commands:
-      build:
-        - date
-        - sleep 25
