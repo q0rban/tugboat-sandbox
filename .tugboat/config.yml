@@ -1,6 +1,6 @@
 services:
   one:
-    image: chromatichq/php-apache-nvm-test
+    image: chromatichq/php-apache-nvm-test:8.0
     default: true
     commands:
       build:
