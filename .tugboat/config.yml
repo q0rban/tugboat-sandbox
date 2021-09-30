@@ -7,11 +7,10 @@ services:
         - ./test.sh
   two:
     image: chromatichq/php-apache-nvm-test:8.0
-    default: true
     commands:
       build: |
         #!/bin/bash -le
-        
+
         env
         which node
         hash nvm
