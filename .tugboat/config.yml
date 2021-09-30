@@ -4,4 +4,4 @@ services:
     default: true
     commands:
       build:
-        - echo "hi!"
+        - ./test.sh
