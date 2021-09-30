@@ -5,3 +5,15 @@ services:
     commands:
       build:
         - ./test.sh
+  two:
+    image: chromatichq/php-apache-nvm-test:8.0
+    default: true
+    commands:
+      build: |
+        #!/bin/bash -le
+        
+        env
+        which node
+        hash nvm
+        nvm install
+        node --version
