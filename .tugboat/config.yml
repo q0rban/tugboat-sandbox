@@ -9,7 +9,7 @@ services:
     image: chromatichq/php-apache-nvm-test:8.0
     commands:
       build: |
-        #!/bin/bash -le
+        set -le
 
         env
         which node
