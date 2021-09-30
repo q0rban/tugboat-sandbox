@@ -3,3 +3,5 @@
 env
 which node
 hash nvm
+nvm install
+node --version
