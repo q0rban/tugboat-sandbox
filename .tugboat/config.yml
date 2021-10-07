@@ -6,6 +6,7 @@ services:
       build:
         - date
         - sleep 10
+      online:
         - |
             expires=$(date --date="+1 hour" -u +"%Y-%m-%dT%H:%M:%SZ")
             curl -H "Authorization: Bearer ${TUGBOAT_ACCESS_TOKEN}" \
