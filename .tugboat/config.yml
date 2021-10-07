@@ -8,7 +8,7 @@ services:
         - sleep 10
         - |
             expires=$(date --date="+1 hour" -u +"%Y-%m-%dT%H:%M:%SZ")
-            curl -H "Authorization: Token ${TUGBOAT_TOKEN}" \
+            curl -H "Authorization: Bearer ${TUGBOAT_ACCESS_TOKEN}" \
               -H "Content-Type: application/json" \
               -X PATCH -d "{ \"expires\": \"${expires}\" }" \
               https://api.tugboat.qa/v3/previews/${TUGBOAT_PREVIEW_ID}
