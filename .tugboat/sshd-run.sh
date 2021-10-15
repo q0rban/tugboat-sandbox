@@ -9,4 +9,4 @@ if [ ! -d /run/sshd ]; then
     chmod 0755 /run/sshd
 fi
 
-exec /usr/sbin/sshd -D $SSHD_OPTS
+exec /usr/sbin/sshd -e -D $SSHD_OPTS

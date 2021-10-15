@@ -9,3 +9,10 @@ services:
         - apt-get -y install openssh-server
         - mkdir -p /etc/service/sshd
         - ln -snf $TUGBOAT_ROOT/.tugboat/sshd-run.sh /etc/service/sshd/run
+        - echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
+  two:
+    image: tugboatqa/debian
+    commands:
+      init:
+        - apt-get update
+        - apt-get -y install openssh-client
