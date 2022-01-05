@@ -21,8 +21,6 @@ on:
 jobs:
   tugboat_rebuild_base_previews:
     name: Rebuild Tugboat Base Previews
-    env:
-      TUGBOAT_REPO: 5ec2e1c6e7a500aa10c330f9
     runs-on: ubuntu-latest
     container:
       image: tugboatqa/cli
@@ -33,7 +31,7 @@ jobs:
         id: find_base_previews
         run: |
           # Create a space-delimited list of all base previews
-          base_previews=$(tugboat ls previews repo=${{ env.TUGBOAT_REPO }} -j | jq -r '[.[] | select(.anchor == true) | .id] | join(" ")')
+          base_previews=$(tugboat ls previews repo=${{ secrets.TUGBOAT_REPO }} -j | jq -r '[.[] | select(.anchor == true and .locked != true) | .id] | join(" ")')
           echo "::set-output name=base_previews::${base_previews}"
       - name: Rebuild Base Previews
         id: rebuild_base_previews
