@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Create a Tugboat Preview
     env:
-      TUGBOAT_REPO: 5eeccde8a1609248b52892ee
+      TUGBOAT_REPO: 5ec2e1c6e7a500aa10c330f9
     steps:
       - name: Create Tugboat Preview
         id: tugboat_pr_preview
