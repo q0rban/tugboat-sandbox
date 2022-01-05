@@ -4,10 +4,20 @@ on:
     - cron: '21 0 * * *'
 jobs:
   tugboat_rebuild_base_previews:
+    name: Rebuild Tugboat Base Previews
+    env:
+      TUGBOAT_REPO: 5eeccde8a1609248b52892ee
     runs-on: ubuntu-latest
     container:
       image: tugboatqa/cli
       env:
         TUGBOAT_API_TOKEN: ${{ secrets.TUGBOAT_API_TOKEN }}
     steps:
-      - run: tugboat ls previews
+      - name: Find Base Previews
+        id: find_base_previews
+        run: |
+          base_previews=$(tugboat ls previews repo=${{ env.TUGBOAT_REPO }} | jq -r '.[] | select(.anchor == true) | .id')
+          echo "::set-output name=base_previews::${base_previews}"
+      - name: Rebuild Base Previews
+        id: rebuild_base_previews
+        run: echo ${{ steps.find_base_previews.outputs.base_previews }}
