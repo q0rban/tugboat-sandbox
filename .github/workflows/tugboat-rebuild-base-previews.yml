@@ -1,0 +1,13 @@
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '21 0 * * *'
+jobs:
+  tugboat_rebuild_base_previews:
+    runs-on: ubuntu-latest
+    container:
+      image: tugboatqa/cli
+      env:
+        TUGBOAT_API_TOKEN: ${{ secrets.TUGBOAT_API_TOKEN }}
+    steps:
+      - run: tugboat ls previews
