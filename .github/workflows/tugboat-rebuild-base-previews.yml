@@ -16,7 +16,7 @@ jobs:
       - name: Find Base Previews
         id: find_base_previews
         run: |
-          base_previews=$(tugboat ls previews repo=${{ env.TUGBOAT_REPO }} | jq -r '.[] | select(.anchor == true) | .id')
+          base_previews=$(tugboat ls previews repo=${{ env.TUGBOAT_REPO }} -j | jq -r '.[] | select(.anchor == true) | .id')
           echo "::set-output name=base_previews::${base_previews}"
       - name: Rebuild Base Previews
         id: rebuild_base_previews
