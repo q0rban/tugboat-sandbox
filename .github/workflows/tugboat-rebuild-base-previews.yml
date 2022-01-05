@@ -38,5 +38,5 @@ jobs:
         if: ${{ steps.find_base_previews.outputs.base_previews }}
         run: |
           for x in ${{ steps.find_base_previews.outputs.base_previews }}; do
-            tugboat -q rebuild $x force children
+            tugboat rebuild $x force children
           done
