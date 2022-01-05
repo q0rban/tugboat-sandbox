@@ -16,8 +16,13 @@ jobs:
       - name: Find Base Previews
         id: find_base_previews
         run: |
-          base_previews=$(tugboat ls previews repo=${{ env.TUGBOAT_REPO }} -j | jq -r '.[] | select(.anchor == true) | .id')
+          # Create a space-delimited list of all base previews
+          base_previews=$(tugboat ls previews repo=${{ env.TUGBOAT_REPO }} -j | jq -r '[.[] | select(.anchor == true) | .id] | join(" ")')
           echo "::set-output name=base_previews::${base_previews}"
       - name: Rebuild Base Previews
         id: rebuild_base_previews
-        run: echo ${{ steps.find_base_previews.outputs.base_previews }}
+        if: ${{ steps.find_base_previews.outputs.base_previews }}
+        run: |
+          for x in ${{ steps.find_base_previews.outputs.base_previews }}; do
+            tugboat -q rebuild $x force children
+          done
