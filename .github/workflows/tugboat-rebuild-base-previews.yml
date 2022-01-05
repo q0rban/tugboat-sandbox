@@ -1,6 +1,22 @@
+# This example GitHub Action workflow will Rebuild ALL base previews in a
+# repository on a schedule or on demand. See the GitHub docs on
+# workflow_dispatch for details on how to manually trigger a workflow.
+#
+# 1. You need to create a Tugboat API Token and store it as a GitHub Repository
+#    secret named TUGBOAT_API_TOKEN.
+#    See:
+#      - https://docs.tugboat.qa/tugboat-cli/set-an-access-token/
+#      - https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository
+#
+# 2. You need to store the Tugboat Repository ID and store it as a GitHub
+#    Repository secret name TUGBOAT_REPO.
+#    See:
+#      - https://docs.tugboat.qa/faq/find-tugboat-ids/#repository-id-in-the-web-interface
+#      - https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository
 on:
   workflow_dispatch:
   schedule:
+    # Customize the schedule for rebuilding here.
     - cron: '21 0 * * *'
 jobs:
   tugboat_rebuild_base_previews:
