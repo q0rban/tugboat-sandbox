@@ -17,7 +17,13 @@ on:
   workflow_dispatch:
   schedule:
     # Customize the schedule for rebuilding here.
-    - cron: '21 0 * * *'
+    #        ┌───────────── minute (0 - 59)
+    #        │ ┌───────────── hour (0 - 23)
+    #        │ │ ┌───────────── day of the month (1 - 31)
+    #        │ │ │ ┌───────────── month (1 - 12 or JAN-DEC)
+    #        │ │ │ │ ┌───────────── day of the week (0 - 6 or SUN-SAT)
+    #        * * * * *
+    - cron: '8 0 * * *'
 jobs:
   tugboat_rebuild_base_previews:
     name: Rebuild Tugboat Base Previews
