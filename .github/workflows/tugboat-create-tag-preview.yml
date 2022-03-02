@@ -1,0 +1,35 @@
+# This example GitHub Action workflow will build a new Tugboat Preview when a
+# tag is pushed to GitHub.
+#
+# 1. You need to create a Tugboat API Token and store it as a GitHub Repository
+#    secret named TUGBOAT_API_TOKEN.
+#    See:
+#      - https://docs.tugboat.qa/tugboat-cli/set-an-access-token/
+#      - https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository
+#
+# 2. You need to store the Tugboat Repository ID and store it as a GitHub
+#    Repository secret name TUGBOAT_REPO.
+#    See:
+#      - https://docs.tugboat.qa/faq/find-tugboat-ids/#repository-id-in-the-web-interface
+#      - https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository
+on:
+  push:
+    tags:
+      # Create a Tugboat Preview anytime a new tag is pushed.
+      # GitHub docs: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#running-your-workflow-only-when-a-push-of-specific-tags-occurs
+      - '**'
+
+jobs:
+  tugboat_create_tag_preview:
+    name: Create tag Tugboat Preview
+    runs-on: ubuntu-latest
+    container:
+      image: tugboatqa/cli
+      env:
+        TUGBOAT_API_TOKEN: ${{ secrets.TUGBOAT_API_TOKEN }}
+    steps:
+      - name: Create Tugboat Preview
+        id: tugboat_tag_preview
+        # Tugboat API: https://api.tugboat.qa/v3#tag/Previews/paths/~1previews/post
+        # GitHub Action context info: https://docs.github.com/en/actions/learn-github-actions/contexts#github-context
+        run: 'tugboat create preview ${{ github.action_ref }} type=tag'
