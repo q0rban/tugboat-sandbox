@@ -32,4 +32,4 @@ jobs:
         id: tugboat_tag_preview
         # Tugboat API: https://api.tugboat.qa/v3#tag/Previews/paths/~1previews/post
         # GitHub Action context info: https://docs.github.com/en/actions/learn-github-actions/contexts#github-context
-        run: 'tugboat create preview ${{ github.action_ref }} type=tag'
+        run: 'tugboat create preview ${{ github.ref_name }} repo=${{ secrets.TUGBOAT_REPO }} type=tag'
