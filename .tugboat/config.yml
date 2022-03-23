@@ -6,21 +6,10 @@ services:
       build:
         - date
         - sleep 10
-  two:
-    image: tugboatqa/debian
-    commands:
-      build:
-        - date
-        - sleep 15
-  three:
-    image: tugboatqa/debian
-    commands:
-      build:
-        - date
-        - sleep 20
-  four:
-    image: tugboatqa/debian
-    commands:
-      build:
-        - date
-        - sleep 25
+      online:
+        - |
+            expires=$(date --date="+1 hour" -u +"%Y-%m-%dT%H:%M:%SZ")
+            curl -H "Authorization: Bearer ${TUGBOAT_ACCESS_TOKEN}" \
+              -H "Content-Type: application/json" \
+              -X PATCH -d "{ \"expires\": \"${expires}\" }" \
+              https://api.tugboat.qa/v3/previews/${TUGBOAT_PREVIEW_ID}
