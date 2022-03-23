@@ -14,3 +14,4 @@ services:
              -H "Authorization: Token $TUGBOAT_TOKEN"
              https://api.tugboat.qa/v3/previews/$TUGBOAT_PREVIEW_ID
              | jq .provider_ref.labels'
+        - echo "Hi André!"
