@@ -10,6 +10,6 @@ services:
           while [ $i -lt 60 ]; do
             sleep 1
             i=$((i + 1))
-            echo $((100-i))
+            echo $((60-i))
           done
         - exit 1
