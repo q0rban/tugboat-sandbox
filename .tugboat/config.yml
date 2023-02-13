@@ -1,26 +1,8 @@
 services:
-  one:
-    image: tugboatqa/debian
+  httpd:
+    image: tugboatqa/httpd
     default: true
+    subpath: true
     commands:
-      build:
-        - date
-        - sleep 10
-  two:
-    image: tugboatqa/debian
-    commands:
-      build:
-        - date
-        - sleep 15
-  three:
-    image: tugboatqa/debian
-    commands:
-      build:
-        - date
-        - sleep 20
-  four:
-    image: tugboatqa/debian
-    commands:
-      build:
-        - date
-        - sleep 25
+      init:
+        - ln -snf "${TUGBOAT_ROOT}" "${DOCROOT}"
