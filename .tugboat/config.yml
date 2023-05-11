@@ -6,16 +6,20 @@ services:
       build:
         - date
         - sleep 10
-      online:
-        - hostname && false
+      online: |
+        set -x
+        hostname
+        false
   two:
     image: tugboatqa/debian
     commands:
       build:
         - date
         - sleep 15
-      online:
-        - hostname && true
+      online: |
+        set -x
+        hostname
+        true
   three:
     image: tugboatqa/debian
     commands:
