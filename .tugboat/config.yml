@@ -10,7 +10,7 @@ services:
         - echo "$(hostname) start $(date)"
         - sleep 5
         - echo "$(hostname) end $(date)"
-        - false
+        - exit 23
   two:
     image: tugboatqa/debian
     checkout: true
@@ -32,6 +32,7 @@ services:
         - echo "$(hostname) start $(date)"
         - sleep 20
         - echo "$(hostname) end $(date)"
+        - false
   four:
     image: tugboatqa/debian
     depends:
