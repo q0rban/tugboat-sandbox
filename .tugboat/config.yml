@@ -36,6 +36,8 @@ services:
         - echo "$(hostname) end $(date)"
   four:
     image: tugboatqa/debian
+    depends:
+      - one
     commands:
       build:
         - date
