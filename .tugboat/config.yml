@@ -17,12 +17,10 @@ services:
     commands:
       build:
         - date
-      online: |
-        set -x
-        echo "$(hostname) start $(date)"
-        sleep 1
-        echo "$(hostname) end $(date)"
-        true
+      online:
+        - echo "$(hostname) start $(date)"
+        - sleep 1
+        - echo "$(hostname) end $(date)"
       ready: test ! -f /var/lib/tugboat/.tugboat/config.yml || sleep 10
   three:
     image: tugboatqa/debian
