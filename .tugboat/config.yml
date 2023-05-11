@@ -12,14 +12,15 @@ services:
         false
   two:
     image: tugboatqa/debian
+    checkout: true
     commands:
       build:
         - date
-        - sleep 15
       online: |
         set -x
         hostname
         true
+      ready: test ! -f /var/lib/tugboat/.tugboat/config.yml || sleep 30
   three:
     image: tugboatqa/debian
     commands:
