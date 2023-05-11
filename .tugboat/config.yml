@@ -23,7 +23,7 @@ services:
         sleep 1
         echo "$(hostname) end $(date)"
         true
-      ready: test ! -f /var/lib/tugboat/.tugboat/config.yml || sleep 30
+      ready: test ! -f /var/lib/tugboat/.tugboat/config.yml || sleep 10
   three:
     image: tugboatqa/debian
     commands:
@@ -32,7 +32,6 @@ services:
         - sleep 20
       online:
         - echo "$(hostname) start $(date)"
-        - date
         - sleep 20
         - echo "$(hostname) end $(date)"
   four:
