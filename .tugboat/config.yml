@@ -6,10 +6,11 @@ services:
       build:
         - date
         - sleep 10
-      online: |
-        set -x
-        hostname
-        false
+      online:
+        - echo "$(hostname) start $(date)"
+        - sleep 5
+        - echo "$(hostname) end $(date)"
+        - false
   two:
     image: tugboatqa/debian
     checkout: true
@@ -18,7 +19,9 @@ services:
         - date
       online: |
         set -x
-        hostname
+        echo "$(hostname) start $(date)"
+        sleep 1
+        echo "$(hostname) end $(date)"
         true
       ready: test ! -f /var/lib/tugboat/.tugboat/config.yml || sleep 30
   three:
@@ -28,7 +31,10 @@ services:
         - date
         - sleep 20
       online:
-        - hostname && false
+        - echo "$(hostname) start $(date)"
+        - date
+        - sleep 20
+        - echo "$(hostname) end $(date)"
   four:
     image: tugboatqa/debian
     commands:
@@ -36,4 +42,6 @@ services:
         - date
         - sleep 25
       online:
-        - hostname && true
+        - echo "$(hostname) start $(date)"
+        - sleep 10
+        - echo "$(hostname) end $(date)"
