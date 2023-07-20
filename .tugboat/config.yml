@@ -1,26 +1,8 @@
 services:
-  one:
+  slow:
     image: tugboatqa/debian
     default: true
     commands:
       build:
         - date
-        - sleep 10
-  two:
-    image: tugboatqa/debian
-    commands:
-      build:
-        - date
-        - sleep 15
-  three:
-    image: tugboatqa/debian
-    commands:
-      build:
-        - date
-        - sleep 20
-  four:
-    image: tugboatqa/debian
-    commands:
-      build:
-        - date
-        - sleep 25
+        - sleep 600
