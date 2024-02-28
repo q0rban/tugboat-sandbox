@@ -1,33 +1,49 @@
 services:
   one:
-    image: tugboatqa/debian
+    image: tugboatqa/alpine
     default: true
     commands:
+      build:
+        - echo "$(hostname) start $(date)"
+        - sleep 15
+        - echo "$(hostname) end $(date)"
       online:
         - echo "$(hostname) start $(date)"
-        - sleep 5
+        - sleep 15
         - echo "$(hostname) end $(date)"
         - exit 23
   two:
-    image: tugboatqa/debian
+    image: tugboatqa/alpine
     commands:
+      build:
+        - echo "$(hostname) start $(date)"
+        - sleep 15
+        - echo "$(hostname) end $(date)"
       online:
         - echo "$(hostname) start $(date)"
-        - sleep 1
+        - sleep 15
         - echo "$(hostname) end $(date)"
   three:
-    image: tugboatqa/debian
+    image: tugboatqa/alpine
     commands:
+      build:
+        - echo "$(hostname) start $(date)"
+        - sleep 15
+        - echo "$(hostname) end $(date)"
       online:
         - echo "$(hostname) start $(date)"
         - sleep 20
         - echo "$(hostname) end $(date)"
         - false
   four:
-    image: tugboatqa/debian
+    image: tugboatqa/alpine
     depends:
       - one
     commands:
+      build:
+        - echo "$(hostname) start $(date)"
+        - sleep 15
+        - echo "$(hostname) end $(date)"
       online:
         - echo "$(hostname) start $(date)"
         - sleep 10
