@@ -2,6 +2,8 @@ services:
   one:
     image: tugboatqa/alpine
     default: true
+    depends:
+      - two
     commands:
       build:
         - echo "$(hostname) start $(date)"
@@ -25,6 +27,8 @@ services:
         - echo "$(hostname) end $(date)"
   three:
     image: tugboatqa/alpine
+    depends:
+      - two
     commands:
       build:
         - echo "$(hostname) start $(date)"
