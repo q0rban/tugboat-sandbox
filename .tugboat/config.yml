@@ -1,6 +1,6 @@
 services:
   apache:
-    image: tugboatqa/httpd
+    image: tugboatqa/php:8.3-apache
     subpath: true
     commands:
       init:
