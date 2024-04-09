@@ -19,4 +19,4 @@ services:
         - sed
           -e "s@style.css\"@$TUGBOAT_SERVICE_URL_PATH/&@"
           -e "s@logo.svg\"@$TUGBOAT_SERVICE_URL_PATH/&@"
-          -i index.html
+          -i ${DOCROOT}/index.html
