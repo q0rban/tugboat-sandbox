@@ -8,7 +8,7 @@ services:
         - apt-get update
         - apt-get install bsd-mailx
         - rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-        - ln -snf "${TUGBOAT_ROOT}" "${DOCROOT}"
+        - ln -snf "${TUGBOAT_ROOT}/html" "${DOCROOT}"
       update:
         - echo "********** UPDATE **********"
       build:
