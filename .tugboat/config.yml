@@ -1,26 +1,22 @@
 services:
-  one:
-    image: tugboatqa/debian
-    default: true
+  apache:
+    image: tugboatqa/httpd
+    subpath: true
     commands:
+      init:
+        - echo "********** INIT **********"
+        - apt-get update
+        - apt-get install bsd-mailx
+        - rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+        - ln -snf "${TUGBOAT_ROOT}" "${DOCROOT}"
+      update:
+        - echo "********** UPDATE **********"
       build:
-        - date
-        - sleep 10
-  two:
-    image: tugboatqa/debian
-    commands:
-      build:
-        - date
-        - sleep 15
-  three:
-    image: tugboatqa/debian
-    commands:
-      build:
-        - date
-        - sleep 20
-  four:
-    image: tugboatqa/debian
-    commands:
-      build:
-        - date
-        - sleep 25
+        - echo "********** BUILD **********"
+        - cat .tugboat/tugboat.txt | mail -s "[1] Tugboat Preview ${TUGBOAT_PREVIEW_ID}" tugboat@example.com
+        - cat .tugboat/tugboat.txt | mail -s "[2] Tugboat Preview ${TUGBOAT_PREVIEW_ID}" tugboat@example.com
+        - cat .tugboat/tugboat.txt
+        - sed
+          -e "s@style.css\"@$TUGBOAT_SERVICE_URL_PATH/&@"
+          -e "s@logo.svg\"@$TUGBOAT_SERVICE_URL_PATH/&@"
+          -i index.html
