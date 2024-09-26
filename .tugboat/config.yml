@@ -1,26 +1,18 @@
 services:
   one:
-    image: tugboatqa/debian
+    image: chromatichq/php-apache-nvm-test:8.0
     default: true
     commands:
       build:
-        - date
-        - sleep 10
+        - ./test.sh
   two:
-    image: tugboatqa/debian
+    image: chromatichq/php-apache-nvm-test:8.0
     commands:
-      build:
-        - date
-        - sleep 15
-  three:
-    image: tugboatqa/debian
-    commands:
-      build:
-        - date
-        - sleep 20
-  four:
-    image: tugboatqa/debian
-    commands:
-      build:
-        - date
-        - sleep 25
+      build: |
+        set -le
+
+        env
+        which node
+        hash nvm
+        nvm install
+        node --version
