@@ -29,7 +29,7 @@ services:
         # environment variables or this step will fail!
         - su -s /bin/sh -c "/opt/solr/bin/solr create -c solr -n solr -d $TUGBOAT_ROOT/.tugboat/solr/config shards 1 --replication-factor 1" solr
         # Stop our temporary solr server.
-        - solr stop
+        - su -s /bin/sh -c "/opt/solr/bin/solr stop -all" solr
         # Modify the runit script to add -c to the solr-foreground command to
         # start in cloud mode.
         - sed -i 's/solr-foreground/& -c/' /etc/service/solr/run
