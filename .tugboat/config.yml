@@ -13,8 +13,6 @@ services:
         - su -s /bin/sh -c "/opt/solr/bin/solr start -c -Dlog4j.configurationFile=/opt/solr/server/resources/log4j2-console.xml" solr
         # Copy security.json into place.
         - solr zk cp file:"$TUGBOAT_ROOT"/.tugboat/solr/security.json zk:/security.json -z localhost:9983
-        # Copy solr config with ZooKeeper to the config named solr.
-        - solr zk upconfig -n "solr" -d "$TUGBOAT_ROOT"/.tugboat/solr/config -z localhost:9983
         # Ensure at minimum these files are present in the config.
         - cd .tugboat/solr/config && touch
             schema_extra_fields.xml
@@ -23,6 +21,8 @@ services:
             solrconfig_index.xml
             solrconfig_query.xml
             solrconfig_requestdispatcher.xml
+        # Copy solr config with ZooKeeper to the config named solr.
+        - solr zk upconfig -n "solr" -d "$TUGBOAT_ROOT"/.tugboat/solr/config -z localhost:9983
         # Create a SolrCloud collection named solr using the solr user.
         # You MUST have SOLR_AUTH_TYPE="basic" and
         # SOLR_AUTHENTICATION_OPTS="-Dbasicauth=solr:SolrRocks" in your Tugboat
