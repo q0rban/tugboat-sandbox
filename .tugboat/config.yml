@@ -7,8 +7,9 @@ services:
       init:
         # Set up basic auth for solr admin.
         - sed -i "/\$rootScope.exceptions = {};/a \$scope.username = 'solr'; \$scope.password = 'SolrRocks';" /opt/solr/server/solr-webapp/webapp/js/angular/controllers/login.js
-        # Stop solr; wait up to 30 seconds for this to complete.
-        - sv -w 30 force-stop solr
+        # Stop solr; wait up to 180 seconds for this to complete as that is
+        # how long it waits for Jetty to shut down gracefully.
+        - sv -w 180 stop solr
         # Now start solr with cloud mode as the solr user.
         - su -s /bin/sh -c "/opt/solr/bin/solr start -c -Dlog4j.configurationFile=/opt/solr/server/resources/log4j2-console.xml" solr
         # Copy security.json into place.
