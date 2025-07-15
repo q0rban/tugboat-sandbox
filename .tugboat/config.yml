@@ -16,7 +16,7 @@ services:
         # Copy solr config with ZooKeeper to the config named solr.
         - solr zk upconfig -n "solr" -d "$TUGBOAT_ROOT"/.tugboat/solr/config -z localhost:9983
         # Ensure at minimum these files are present in the config.
-        - cd .tugboat && touch
+        - cd .tugboat/solr/config && touch
             schema_extra_fields.xml
             schema_extra_types.xml
             solrconfig_extra.xml
