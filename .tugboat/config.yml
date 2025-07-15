@@ -15,13 +15,21 @@ services:
         - solr zk cp file:"$TUGBOAT_ROOT"/.tugboat/solr/security.json zk:/security.json -z localhost:9983
         # Copy solr config with ZooKeeper to the config named solr.
         - solr zk upconfig -n "solr" -d "$TUGBOAT_ROOT"/.tugboat/solr/config -z localhost:9983
+        # Ensure at minimum these files are present in the config.
+        - cd .tugboat && touch
+            schema_extra_fields.xml
+            schema_extra_types.xml
+            solrconfig_extra.xml
+            solrconfig_index.xml
+            solrconfig_query.xml
+            solrconfig_requestdispatcher.xml
         # Create a SolrCloud collection named solr using the solr user.
         # You MUST have SOLR_AUTH_TYPE="basic" and
         # SOLR_AUTHENTICATION_OPTS="-Dbasicauth=solr:SolrRocks" in your Tugboat
         # environment variables or this step will fail!
-        - su -s /bin/sh -c "/opt/solr/bin/solr create -c solr -n solr -d "$TUGBOAT_ROOT"/.tugboat/solr/config shards 1 --replication-factor 1" solr
+        - su -s /bin/sh -c "/opt/solr/bin/solr create -c solr -n solr -d $TUGBOAT_ROOT/.tugboat/solr/config shards 1 --replication-factor 1" solr
         # Stop our temporary solr server.
-        - docker-entrypoint.sh solr stop
+        - solr stop
         # Modify the runit script to add -c to the solr-foreground command to
         # start in cloud mode.
         - sed -i 's/solr-foreground/& -c/' /etc/service/solr/run
