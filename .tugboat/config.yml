@@ -1,4 +1,16 @@
 services:
   solr:
-    image: tugboatqa/solr:8.6
+    image: tugboatqa/solr:9.7
     default: true
+    expose: 8983
+    commands:
+      init:
+        - su -s /bin/sh -c "/opt/solr/bin/solr create_core -c solr" solr
+        - sed -i "/\$rootScope.exceptions = {};/a \$scope.username = 'solr'; \$scope.password = 'SolrRocks';" /opt/solr/server/solr-webapp/webapp/js/angular/controllers/login.js
+        # Use ZooKeeper to copy the security.json into place.
+        - solr zk cp file:"$TUGBOAT_ROOT"/.tugboat/solr-security.json zk:/security.json -z localhost:9983
+
+      build:
+        #- cd "${SOLR_HOME}/solr" && rm -rf conf
+        #- cd "${SOLR_HOME}/solr" && ln -snf "/var/lib/tugboat/.ddev/solr/configsets/solr" conf
+
