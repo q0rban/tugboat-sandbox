@@ -3,6 +3,9 @@ services:
     image: tugboatqa/solr:9.7
     default: true
     expose: 8983
+    environment:
+      SOLR_AUTH_TYPE: basic
+      SOLR_AUTHENTICATION_OPTS: '-Dbasicauth=solr:SolrRocks'
     commands:
       init:
         # Set up basic auth for solr admin.
@@ -24,9 +27,6 @@ services:
         # Copy solr config with ZooKeeper to the config named solr.
         - solr zk upconfig -n "solr" -d "$TUGBOAT_ROOT"/.tugboat/solr/config -z localhost:9983
         # Create a SolrCloud collection named solr using the solr user.
-        # You MUST have SOLR_AUTH_TYPE="basic" and
-        # SOLR_AUTHENTICATION_OPTS="-Dbasicauth=solr:SolrRocks" in your Tugboat
-        # environment variables or this step will fail!
         - su -s /bin/sh -c "/opt/solr/bin/solr create -c solr -n solr -d $TUGBOAT_ROOT/.tugboat/solr/config shards 1 --replication-factor 1" solr
         # Stop our temporary solr server.
         - su -s /bin/sh -c "/opt/solr/bin/solr stop -all" solr
