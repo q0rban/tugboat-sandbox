@@ -1,26 +1,15 @@
 services:
-  one:
-    image: tugboatqa/debian
+  php:
+    image: tugboatqa/php:8.4-apache
     default: true
+    depends:
+      - mariadb1
+      - mariadb2
     commands:
       build:
-        - date
-        - sleep 10
-  two:
-    image: tugboatqa/debian
-    commands:
-      build:
-        - date
-        - sleep 15
-  three:
-    image: tugboatqa/debian
-    commands:
-      build:
-        - date
-        - sleep 20
-  four:
-    image: tugboatqa/debian
-    commands:
-      build:
-        - date
-        - sleep 25
+        - mysql -e "SHOW TABLES;" -h mariadb2 -utugboat -ptugboat tugboat
+        - mysql -e "SHOW TABLES;" -h mariadb1 -utugboat -ptugboat tugboat
+  mariadb1:
+    image: tugboatqa/mariadb:11.3
+  mariadb2:
+    image: tugboatqa/mariadb:11.4
