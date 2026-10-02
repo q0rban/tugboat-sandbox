@@ -4,4 +4,5 @@ services:
     default: true
     commands:
       build:
-        - 'false'
+        - sleep 30
+        - 'true'
